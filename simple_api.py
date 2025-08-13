@@ -592,7 +592,7 @@ async def chat_with_ai(request: dict):
         if response.status_code == 200:
             data = response.json()
             ai_response = data.get('candidates', [{}])[0].get('content', {}).get('parts', [{}])[0].get('text', 'Sorry, I could not generate a response.')
-            return {"response": ai_response}
+            return {"status": "success", "response": ai_response}
         else:
             logger.error(f"Gemini API error: {response.status_code} - {response.text}")
             raise HTTPException(status_code=500, detail=f"AI service error: {response.status_code}")

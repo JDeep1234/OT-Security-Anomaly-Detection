@@ -1,0 +1,95 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: ot-security-postgres
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    networks:
+      - ot-security-network
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for real-time messaging
+  redis:
+    image: redis:7-alpine
+    container_name: ot-security-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - ot-security-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API Service (CPU-only)
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.cpu
+    container_name: ot-security-backend
+    ports:
+      - "${BACKEND_PORT}:8000"
+    environment:
+      - REDIS_URL=${REDIS_URL}
+      - DATABASE_URL=${DATABASE_URL}
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - GOOGLE_GEMINI_API_KEY=${GOOGLE_GEMINI_API_KEY}
+      - DATASET_PATH=${DATASET_PATH}
+    networks:
+      - ot-security-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    volumes:
+      - ./simple_api.py:/app/simple_api.py
+      - ./trained_models:/app/trained_models
+      - ./backend/services/realtime_simulation_service.py:/app/services/realtime_simulation_service.py
+      - ./backend/services/realtime_api.py:/app/services/realtime_api.py
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ot-security-frontend
+    ports:
+      - "${FRONTEND_PORT}:80"
+    networks:
+      - ot-security-network
+    depends_on:
+      - backend
+    restart: unless-stopped
+    environment:
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
+
+networks:
+  ot-security-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local 
