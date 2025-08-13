@@ -209,6 +209,20 @@ Our hybrid ML ensemble achieves industry-leading performance:
 - **GPU Acceleration**: 5-10x faster processing
 - **Memory Usage**: <2GB RAM in production
 
+## This table compares multiple machine learning approaches for OT network traffic classification across key metrics:
+
+- **F1 (%) & Accuracy (%)** – Overall detection performance.
+
+- **Inference (ms)** – Time taken to classify a single sample (lower is better).
+
+- **Model Size** – Memory footprint of the trained model.
+
+- **Hardware** – Typical hardware used for inference/training.
+
+- **Train Time** – Approximate time to train the model.
+
+Tree-based models (like Gradient Boosting, Random Forest, XGBoost) consistently achieve the highest accuracy and F1-scores with low latency and small model sizes, making them ideal for real-time security applications.
+
 | Model Family      | Model                 | F1 (%)   | Acc (%)  | Inference (ms) | Size   | Hardware   | Train Time |
 |-------------------|----------------------|----------|----------|----------------|--------|------------|------------|
 | **Tree-Based**    | Gradient Boosting    | 100.00   | 100.00   | 0.5–1.0        | 9.9MB  | CPU/GPU    | ~5 min     |
