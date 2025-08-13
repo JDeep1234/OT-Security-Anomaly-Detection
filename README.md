@@ -1,4 +1,4 @@
-# OT Security Monitoring Dashboard
+# OT-Sentinel: Industrial Control Systems Security Platform
 
 **AI-powered Industrial Control Systems security dashboard with real-time threat detection for SCADA, PLCs & OT networks**
 
