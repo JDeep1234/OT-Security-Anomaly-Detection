@@ -209,6 +209,22 @@ Our hybrid ML ensemble achieves industry-leading performance:
 - **GPU Acceleration**: 5-10x faster processing
 - **Memory Usage**: <2GB RAM in production
 
+| Model Family      | Model                 | F1 (%)   | Acc (%)  | Inference (ms) | Size   | Hardware   | Train Time |
+|-------------------|----------------------|----------|----------|----------------|--------|------------|------------|
+| **Tree-Based**    | Gradient Boosting    | 100.00   | 100.00   | 0.5–1.0        | 9.9MB  | CPU/GPU    | ~5 min     |
+|                   | Random Forest        | 99.95    | 99.95    | 0.5–1.0        | 63MB   | CPU/GPU    | ~5 min     |
+|                   | XGBoost              | 99.86    | 99.86    | 0.5–1.0        | 2.8MB  | CPU/GPU    | ~5 min     |
+|                   | LightGBM             | 99.82    | 99.82    | 0.5–1.0        | 3.9MB  | CPU/GPU    | ~5 min     |
+|                   | CatBoost             | 99.57    | 99.57    | 0.5–1.0        | 2.8MB  | CPU/GPU    | ~5 min     |
+|                   | Ensemble             | 100.00   | 100.00   | 1.0–2.0        | 150MB  | CPU/GPU    | ~10 min    |
+| **Transformer**   | CodeBERT             | 60–70    | 60–70    | 90             | 500MB+ | RTX 3090   | 2–4 hrs    |
+|                   | DeBERTa              | 65–75    | 65–75    | 110            | 1GB+   | RTX 3090   | 3–6 hrs    |
+|                   | TimeGPT              | 70–80    | 70–80    | 50             | 500MB+ | RTX 3090   | 2–4 hrs    |
+| **Neural Network**| MLP Neural Net       | 86.56    | 85.61    | 2–5            | 1.7MB  | CPU/GPU    | ~30 min    |
+|                   | Hybrid Neural Net    | 9.47     | 20.53    | 5–10           | 1.1MB  | CPU/GPU    | ~45 min    |
+| **Traditional ML**| SVM                  | 6.59     | 15.74    | 100–500        | 83MB   | CPU        | 5+ hrs     |
+
+
 ## 🔧 Configuration
 
 ### Docker Compose Customization
