@@ -9,7 +9,7 @@
 
 ## 🚀 Overview
 
-OT-sentinel is a comprehensive cybersecurity monitoring solution for Industrial Control Systems (ICS) and Operational Technology (OT) environments. It combines machine learning-powered threat detection with an intuitive real-time dashboard to protect critical infrastructure from cyber attacks.
+A comprehensive cybersecurity monitoring solution for Industrial Control Systems (ICS) and Operational Technology (OT) environments. It combines machine learning-powered threat detection with an intuitive real-time dashboard to protect critical infrastructure from cyber attacks.
 
 ### 🎯 Key Features
 
